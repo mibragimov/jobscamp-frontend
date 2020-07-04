@@ -5,7 +5,7 @@ import styles from "./Form.module.css";
 import Button from "../button/Button";
 import Input from "../input/Input";
 
-export default function Form({ loginForm, onSignUp }) {
+export default function Form({ loginForm, onSignUp, onLogin }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -15,6 +15,11 @@ export default function Form({ loginForm, onSignUp }) {
   const handleSignUp = (e) => {
     e.preventDefault();
     onSignUp({ name, email, password }, history);
+  };
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    onLogin({ email, password }, history);
   };
 
   let form = (
@@ -48,10 +53,22 @@ export default function Form({ loginForm, onSignUp }) {
   if (loginForm) {
     form = (
       <form className={styles.form}>
-        <Input type="email" placeholder="email" required />
-        <Input type="password" placeholder="password" required />
+        <Input
+          type="email"
+          placeholder="email"
+          required
+          onChange={setEmail}
+          value={email}
+        />
+        <Input
+          type="password"
+          placeholder="password"
+          required
+          onChange={setPassword}
+          value={password}
+        />
 
-        <Button text="Log in" />
+        <Button text="Log in" onClick={handleLogin} />
       </form>
     );
   }

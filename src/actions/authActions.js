@@ -69,7 +69,7 @@ function login(company, history) {
     try {
       dispatch(loginStart());
       const { data } = await axios.post(
-        "https://jobscamp-api.herokuapp.com/companies/login",
+        proxy + "https://jobscamp-api.herokuapp.com/companies/login",
         company
       );
       localStorage.setItem("token", data.token);
@@ -87,7 +87,7 @@ function logout() {
     const token = localStorage.getItem("token");
     try {
       await axios.post(
-        "https://jobscamp-api.herokuapp.com/companies/logout",
+        proxy + "https://jobscamp-api.herokuapp.com/companies/logout",
         undefined,
         { headers: { Authorization: `Bearer ${token}` } }
       );
