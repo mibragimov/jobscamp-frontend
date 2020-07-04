@@ -5,11 +5,17 @@
   display: inline-block;
   font-size: 1.5rem;
   padding: 1.5rem 3rem;
-  background: #3a99d0;
   color: #fff;
   border-radius: 10rem;
   box-shadow: 0 1.2rem 2rem rgba(0, 0, 0, 0.3);
   transition: all 0.3s;
+}
+
+.buttonPrimary {
+  background: #3a99d0;
+}
+.buttonRed {
+  background: #f073c8;
 }
 
 .button:hover {
@@ -18,4 +24,19 @@
 
 .button:active {
   transform: translate(0);
+}
+
+@keyframes moveInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(100px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animated {
+  animation: moveInUp 1s ease-in;
 }

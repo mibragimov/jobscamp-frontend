@@ -1,0 +1,36 @@
+.container {
+  height: 100vh;
+  background-color: #eee;
+  position: relative;
+  overflow-y: auto;
+}
+
+.add:link,
+.add:visited {
+  text-decoration: none;
+  position: fixed;
+  bottom: 10%;
+  right: 5%;
+  background-image: linear-gradient(90deg, #88d9fc, #3862aa);
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
+  width: 5.5rem;
+  height: 5.5rem;
+  clip-path: circle(50% at 50% 50%);
+  text-align: center;
+  padding: 0.8rem;
+  transition: all 0.3s;
+}
+
+.add:hover {
+  transform: translateY(-3px);
+}
+
+.add:active {
+  transform: translate(0);
+}
+
+.add span {
+  font-size: 3.5rem;
+  color: #fff;
+  display: inline-block;
+}
