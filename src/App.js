@@ -1,7 +1,8 @@
 import React, { useEffect } from "react";
 import { Route, Switch, useHistory, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
-import { checkAuthState } from "./actions/authActions";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 // App imports
 import SignUp from "./containers/sign-up/SignUp";
@@ -11,6 +12,7 @@ import JobList from "./containers/job-list/JobList";
 import JobNew from "./containers/job-new/JobNew";
 import ProfileContainer from "./containers/profileContainer/ProfileContainer";
 import Logout from "./containers/logout/Logout";
+import { checkAuthState } from "./actions/authActions";
 
 function App({ onAuth, isAuthenticated }) {
   const history = useHistory();
@@ -41,7 +43,17 @@ function App({ onAuth, isAuthenticated }) {
       </Switch>
     );
   }
-  return <div className="container">{routes}</div>;
+  return (
+    <div className="container">
+      {routes}
+      <ToastContainer
+        position="bottom-right"
+        autoClose={3000}
+        hideProgressBar={false}
+        closeOnClick={true}
+      />
+    </div>
+  );
 }
 
 const mapStateToProps = (state) => {

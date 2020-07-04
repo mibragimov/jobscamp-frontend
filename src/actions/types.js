@@ -7,3 +7,7 @@ export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 export const LOGIN_FAILURE = "LOGIN_FAILURE";
 
 export const LOGOUT = "LOGOUT";
+
+export const CREATE_JOB_START = "CREATE_JOB_START";
+export const CREATE_JOB_SUCCESS = "CREATE_JOB_SUCCESS";
+export const CREATE_JOB_FAILURE = "CREATE_JOB_FAILURE";
