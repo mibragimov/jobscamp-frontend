@@ -19,7 +19,7 @@ export default function Landing() {
           <span className={styles.headingMain}>Discover talents</span>
           <span className={styles.headingSub}>Posting jobs made easy</span>
         </h1>
-        <Button text="Get Started" link="/jobs" animated />
+        <Button text="Get Started" link="/login" animated />
       </div>
     </div>
   );

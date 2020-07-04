@@ -1,14 +1,21 @@
 .button:link,
-.button:visited {
+.button:visited,
+.button {
   text-decoration: none;
   text-transform: uppercase;
   display: inline-block;
   font-size: 1.5rem;
   padding: 1.5rem 3rem;
   color: #fff;
+  border: none;
+  cursor: pointer;
   border-radius: 10rem;
   box-shadow: 0 1.2rem 2rem rgba(0, 0, 0, 0.3);
   transition: all 0.3s;
+}
+
+.button:disabled {
+  opacity: 0.8;
 }
 
 .buttonPrimary {
@@ -23,7 +30,15 @@
 }
 
 .button:active {
+  outline: none;
   transform: translate(0);
+}
+
+.loader {
+  display: inline-block;
+  margin-left: 1rem;
+  font-size: 1.5rem;
+  vertical-align: bottom;
 }
 
 @keyframes moveInUp {

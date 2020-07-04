@@ -5,7 +5,7 @@ import styles from "./Form.module.css";
 import Button from "../button/Button";
 import Input from "../input/Input";
 
-export default function Form({ loginForm, onSignUp, onLogin }) {
+export default function Form({ loginForm, onSignUp, onLogin, isLoading }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -46,13 +46,13 @@ export default function Form({ loginForm, onSignUp, onLogin }) {
         value={password}
       />
 
-      <Button text="Sign Up" onClick={handleSignUp} />
+      <Button text="Sign Up" isLoading={isLoading} />
     </form>
   );
 
   if (loginForm) {
     form = (
-      <form className={styles.form}>
+      <form className={styles.form} onSubmit={handleLogin}>
         <Input
           type="email"
           placeholder="email"
@@ -68,7 +68,7 @@ export default function Form({ loginForm, onSignUp, onLogin }) {
           value={password}
         />
 
-        <Button text="Log in" onClick={handleLogin} />
+        <Button text="Log in" isLoading={isLoading} />
       </form>
     );
   }

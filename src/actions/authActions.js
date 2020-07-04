@@ -106,6 +106,7 @@ function checkAuthState(history) {
     if (token) {
       const _id = localStorage.getItem("_id");
       dispatch(loginSuccess({ token, company: { _id } }));
+      history.push("/jobs");
     } else {
       history.push("/");
     }

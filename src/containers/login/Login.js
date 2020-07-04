@@ -6,12 +6,12 @@ import Form from "../../components/form/Form";
 
 import styles from "./Login.module.css";
 
-function Login({ onLogin }) {
+function Login({ onLogin, isLoading }) {
   return (
     <div className={styles.container}>
       <div className={styles.login}>
         <h3 className={styles.heading}>Log in</h3>
-        <Form loginForm onLogin={onLogin} />
+        <Form loginForm onLogin={onLogin} isLoading={isLoading} />
 
         <p className={styles.paragraph}>
           Don't have an account?
@@ -24,6 +24,12 @@ function Login({ onLogin }) {
   );
 }
 
+const mapStateToProps = (state) => {
+  return {
+    isLoading: state.auth.loading,
+  };
+};
+
 const mapDispatchToProps = (dispatch) => {
   return {
     onLogin: ({ email, password }, history) =>
@@ -31,4 +37,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(Login);

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import styles from "./Navigation.module.css";
 
-export default function Navigation() {
+export default function Navigation({ isAuth }) {
   return (
     <nav className={styles.nav}>
       <ul>
@@ -13,10 +13,14 @@ export default function Navigation() {
           </Link>
         </li>
         <li className={styles.company}>
-          <Link to="/profile">company</Link>
+          <Link to="/profile">Profile</Link>
         </li>
         <li>
-          <Link to="/login">login</Link>
+          {isAuth ? (
+            <Link to="/logout">Logout</Link>
+          ) : (
+            <Link to="/login">Login</Link>
+          )}
         </li>
       </ul>
     </nav>

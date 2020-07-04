@@ -6,12 +6,12 @@ import Form from "../../components/form/Form";
 
 import styles from "./SignUp.module.css";
 
-function SignUp({ onSignUp }) {
+function SignUp({ onSignUp, isLoading }) {
   return (
     <div className={styles.container}>
       <div className={styles.signUp}>
         <h3 className={styles.heading}>Sign Up</h3>
-        <Form onSignUp={onSignUp} />
+        <Form onSignUp={onSignUp} isLoading={isLoading} />
 
         <p className={styles.paragraph}>
           Already have an account?{" "}
@@ -23,6 +23,11 @@ function SignUp({ onSignUp }) {
     </div>
   );
 }
+const mapStateToProps = (state) => {
+  return {
+    isLoading: state.auth.loading,
+  };
+};
 
 const mapDispatchToProps = (dispatch) => {
   return {
@@ -31,4 +36,4 @@ const mapDispatchToProps = (dispatch) => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(SignUp);
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp);
