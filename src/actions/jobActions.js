@@ -44,4 +44,36 @@ function createJob(job, history) {
   };
 }
 
-export { createJob };
+function getJobsStart() {
+  return {
+    type: types.GET_JOBS_START,
+  };
+}
+function getJobsSuccess(jobs) {
+  return {
+    type: types.GET_JOBS_SUCCESS,
+    jobs,
+  };
+}
+function getJobsFailure(error) {
+  return {
+    type: types.GET_JOBS_FAILURE,
+    error,
+  };
+}
+
+function getJobs(query, term, sortBy) {
+  return async (dispatch) => {
+    try {
+      dispatch(getJobsStart());
+      const { data } = await axios.get(
+        `${proxy}https://jobscamp-api.herokuapp.com/jobs?${query}=${term}&sortBy=${sortBy}`
+      );
+      dispatch(getJobsSuccess(data));
+    } catch (error) {
+      dispatch(getJobsFailure(error));
+    }
+  };
+}
+
+export { createJob, getJobs };

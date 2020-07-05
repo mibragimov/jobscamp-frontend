@@ -21,15 +21,20 @@
   width: 10rem;
   height: 10rem;
   float: left;
-  background-color: royalblue;
+  background: linear-gradient(to left, #5cbfe9, #3862aa);
   clip-path: circle(50% at 50% 50%);
   transform: translateX(-3rem);
+}
+
+.img {
+  height: 100%;
 }
 
 .company {
   font-size: 1.4rem;
   font-weight: 700;
   color: #3a99d0;
+  text-transform: capitalize;
 }
 
 .box {
@@ -43,6 +48,7 @@
   font-size: 2rem;
   font-weight: 500;
   line-height: 1.7;
+  text-transform: capitalize;
 }
 
 .skills {
@@ -52,6 +58,7 @@
 }
 .skill {
   font-size: 1.2rem;
+  text-transform: uppercase;
   color: #fff;
   background: linear-gradient(to right, #5cbfe9, #3862aa);
   padding: 0.5rem 1rem;
@@ -68,10 +75,12 @@
   font-size: 1.2rem;
   font-weight: 500;
   color: #777;
+  text-transform: capitalize;
 }
 .details li:not(:last-child) {
   margin-right: 3rem;
 }
 .details li:first-child {
   list-style: none;
+  text-transform: lowercase;
 }

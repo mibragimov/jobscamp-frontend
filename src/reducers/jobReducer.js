@@ -3,12 +3,13 @@ import * as types from "../actions/types";
 const INITIAL_STATE = {
   loading: false,
   error: null,
-  job: [],
+  jobs: [],
 };
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case types.CREATE_JOB_START:
+    case types.GET_JOBS_START:
       return {
         ...state,
         loading: true,
@@ -19,13 +20,20 @@ export default (state = INITIAL_STATE, action) => {
         ...state,
         loading: false,
         error: null,
-        job: state.job.concat(action.job),
       };
     case types.CREATE_JOB_FAILURE:
+    case types.GET_JOBS_FAILURE:
       return {
         ...state,
         error: action.error,
         loading: false,
+      };
+    case types.GET_JOBS_SUCCESS:
+      return {
+        ...state,
+        loading: false,
+        error: null,
+        jobs: action.jobs,
       };
     default:
       return state;

@@ -1,9 +1,19 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./Profile.module.css";
+import { toast } from "react-toastify";
 
-import Input from "../input/Input";
+export default function Profile({ onUploadLogo, _id }) {
+  const [file, setFile] = useState(undefined);
 
-export default function Profile() {
+  const handleUploadFile = () => {
+    if (file) {
+      const formData = new FormData();
+      formData.append("logo", file);
+      onUploadLogo(formData);
+    } else {
+      toast.warn("Please, upload a file");
+    }
+  };
   return (
     <div className={styles.profile}>
       <h3>Settings</h3>
@@ -11,13 +21,13 @@ export default function Profile() {
       <div className={styles.row}>
         <div className={styles.nav}>
           <a href="#" className={styles.active}>
-            <span class="material-icons">person</span>Profile
+            <span className="material-icons">person</span>Profile
           </a>
           <a href="#">
-            <span class="material-icons">translate</span>Language
+            <span className="material-icons">translate</span>Language
           </a>
           <a href="#">
-            <span class="material-icons">sync</span>Sync
+            <span className="material-icons">sync</span>Sync
           </a>
         </div>
 
@@ -33,12 +43,23 @@ export default function Profile() {
             <div className={styles.avatar}>
               <h4>Company logo</h4>
               <figure>
-                <img src="" alt="" />
+                <img
+                  className={styles.img}
+                  src={`https://jobscamp-api.herokuapp.com/companies/${_id}/logo`}
+                  alt=""
+                />
               </figure>
               <label htmlFor="file" className={styles.upload}>
                 Upload
               </label>
-              <input id="file" type="file" />
+              <button className={styles.upload} onClick={handleUploadFile}>
+                Change
+              </button>
+              <input
+                id="file"
+                type="file"
+                onChange={(e) => setFile(e.target.files[0])}
+              />
             </div>
           </div>
 

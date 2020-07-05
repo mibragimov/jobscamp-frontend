@@ -17,8 +17,6 @@ import { checkAuthState } from "./actions/authActions";
 function App({ onAuth, isAuthenticated }) {
   const history = useHistory();
 
-  console.log(isAuthenticated);
-
   useEffect(() => {
     onAuth(history);
   }, [onAuth, history]);

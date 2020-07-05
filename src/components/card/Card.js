@@ -1,28 +1,44 @@
 import React from "react";
+import moment from "moment";
 
 import styles from "./Card.module.css";
 
-export default function Card() {
+export default function Card({ job }) {
+  let skillsArray;
+
+  if (job) {
+    skillsArray = job.skills
+      .join()
+      .split(",")
+      .map((skill) => skill.trim());
+  }
+
   return (
     <div className={styles.card}>
       <figure className={styles.shape}>
-        <img className={styles.img} src="" alt="" />
+        <img
+          className={styles.img}
+          src={`https://jobscamp-api.herokuapp.com/companies/${job.owner}/logo`}
+          alt=""
+        />
       </figure>
 
       <div className={styles.text}>
-        <h4 className={styles.company}>Photosnap</h4>
+        <h4 className={styles.company}>{job.company}</h4>
         <div className={styles.box}>
-          <h3 className={styles.role}>Frontend Developer</h3>
+          <h3 className={styles.role}>{job.role}</h3>
           <ul className={styles.skills}>
-            <li className={styles.skill}>HTML</li>
-            <li className={styles.skill}>CSS</li>
-            <li className={styles.skill}>JAVA</li>
+            {skillsArray.map((skill, idx) => (
+              <li key={idx} className={styles.skill}>
+                {skill}
+              </li>
+            ))}
           </ul>
         </div>
         <ul className={styles.details}>
-          <li>1d ago</li>
-          <li>Full time</li>
-          <li>USA</li>
+          <li>{moment(job.createdAt).fromNow()}</li>
+          <li>{job.type}</li>
+          <li>{job.location}</li>
         </ul>
       </div>
     </div>
