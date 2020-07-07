@@ -35,6 +35,8 @@ export default (state = INITIAL_STATE, action) => {
         error: null,
         jobs: action.jobs,
       };
+    case types.DELETE_ACCOUNT_SUCCESS:
+      return INITIAL_STATE;
     default:
       return state;
   }

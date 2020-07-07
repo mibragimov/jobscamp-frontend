@@ -27,31 +27,99 @@ function uploadAvatarFailure(err) {
 function uploadAvatar(file) {
   return async function (dispatch) {
     const token = localStorage.getItem("token");
-    const _id = localStorage.getItem("_id");
     const config = {
       headers: {
         "Content-Type": "multipart/form-data",
         Authorization: `Bearer ${token}`,
       },
     };
-    let avatar;
 
     try {
       dispatch(uploadAvatarStart());
-      const res = await axios.post(
+      await axios.post(
         proxy + "https://jobscamp-api.herokuapp.com/companies/me/logo",
         file,
         config
       );
-
-      console.log(res);
-
       dispatch(uploadAvatarSuccess());
       toast.success("File uploaded");
     } catch (err) {
       dispatch(uploadAvatarFailure(err));
+      toast.error("Error connecting with server");
     }
   };
 }
 
-export { uploadAvatar };
+function getProfileStart() {
+  return {
+    type: types.GET_PROFILE_START,
+  };
+}
+function getProfileSuccess(data) {
+  return {
+    type: types.GET_PROFILE_SUCCESS,
+    data,
+  };
+}
+function getProfileFailure(error) {
+  return {
+    type: types.GET_PROFILE_FAILURE,
+    error: error.message,
+  };
+}
+
+function getProfile() {
+  return async (dispatch) => {
+    const token = localStorage.getItem("token");
+    try {
+      dispatch(getProfileStart());
+      const {
+        data,
+      } = await axios.get(
+        `${proxy}https://jobscamp-api.herokuapp.com/companies/me`,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      dispatch(getProfileSuccess(data));
+    } catch (error) {
+      dispatch(getProfileFailure(error));
+    }
+  };
+}
+
+function deleteAccountStart() {
+  return {
+    type: types.DELETE_ACCOUNT_START,
+  };
+}
+function deleteAccountSuccess() {
+  return {
+    type: types.DELETE_ACCOUNT_SUCCESS,
+  };
+}
+function deleteAccountFailure(err) {
+  return {
+    type: types.DELETE_ACCOUNT_FAILURE,
+    error: err.message,
+  };
+}
+
+function deleteAccount(history) {
+  return async (dispatch) => {
+    const token = localStorage.getItem("token");
+    try {
+      dispatch(deleteAccountStart());
+      await axios.delete(
+        `${proxy}https://jobscamp-api.herokuapp.com/companies/me`,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      dispatch(deleteAccountSuccess());
+      localStorage.removeItem("token");
+      localStorage.removeItem("_id");
+      history.push("/");
+    } catch (error) {
+      dispatch(deleteAccountFailure(error));
+    }
+  };
+}
+
+export { uploadAvatar, getProfile, deleteAccount };

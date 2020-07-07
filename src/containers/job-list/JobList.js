@@ -8,6 +8,7 @@ import Card from "../../components/card/Card";
 import NavContainer from "../NavContainer/NavContainer";
 import Search from "../../components/search/Search";
 import { getJobs } from "../../actions/jobActions";
+import Spinner from "../../components/spinner/Spinner";
 
 function JobList({ onGetJobs, isLoading, jobs }) {
   const [queryType, setQueryType] = useState("role");
@@ -39,11 +40,7 @@ function JobList({ onGetJobs, isLoading, jobs }) {
         onSelectSortType={setSortType}
         sortType={sortType}
       />
-      {isLoading ? (
-        <div className={styles.loader}>Loading...</div>
-      ) : (
-        renderJobs()
-      )}
+      {isLoading ? <Spinner /> : renderJobs()}
 
       <Link to="/jobs/new" className={styles.add}>
         <span className="material-icons">add</span>

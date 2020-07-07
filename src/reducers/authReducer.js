@@ -34,6 +34,8 @@ export default function authReducer(state = INITIAL_STATE, action) {
       };
     case types.LOGOUT:
       return INITIAL_STATE;
+    case types.DELETE_ACCOUNT_SUCCESS:
+      return INITIAL_STATE;
     default:
       return state;
   }

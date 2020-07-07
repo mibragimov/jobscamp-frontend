@@ -85,6 +85,7 @@
   height: 7rem;
   border-radius: 50%;
   margin: 0 0 3rem 0;
+  border: 3px solid #eee;
 }
 
 .img {
@@ -155,4 +156,13 @@ input[type="file"] {
   font-size: 1.4rem;
   color: #777;
   margin-top: 1.5rem;
+}
+.modalContent p {
+  color: #777;
+}
+.modalAction {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2rem;
 }
