@@ -75,5 +75,95 @@ function getJobs(query, term, sortBy) {
     }
   };
 }
+function getMyJobs(query, term, sortBy) {
+  return async (dispatch) => {
+    const token = localStorage.getItem("token");
+    try {
+      dispatch(getJobsStart());
+      const { data } = await axios.get(
+        `${proxy}https://jobscamp-api.herokuapp.com/jobs/me?${query}=${term}&sortBy=${sortBy}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      dispatch(getJobsSuccess(data));
+    } catch (error) {
+      dispatch(getJobsFailure(error));
+    }
+  };
+}
 
-export { createJob, getJobs };
+function editJobStart() {
+  return {
+    type: types.EDIT_JOB_START,
+  };
+}
+function editJobSuccess() {
+  return {
+    type: types.EDIT_JOB_SUCCESS,
+  };
+}
+function editJobFailure(err) {
+  return {
+    type: types.EDIT_JOB_FAILURE,
+    error: err.message,
+  };
+}
+
+function editJob(id, update, history) {
+  return async (dispatch) => {
+    const token = localStorage.getItem("token");
+    try {
+      dispatch(editJobStart());
+      await axios.patch(
+        `${proxy}https://jobscamp-api.herokuapp.com/jobs/${id}`,
+        update,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      dispatch(editJobSuccess());
+      history.push("/my-jobs");
+    } catch (error) {
+      dispatch(editJobFailure(error));
+    }
+  };
+}
+
+function deleteJobStart() {
+  return {
+    type: types.DELETE_JOB_START,
+  };
+}
+function deleteJobSuccess(data) {
+  return {
+    type: types.DELETE_JOB_SUCCESS,
+    data,
+  };
+}
+function deleteJobFailure(err) {
+  return {
+    type: types.DELETE_JOB_FAILURE,
+    error: err.message,
+  };
+}
+
+function deleteJob(id) {
+  return async (dispatch) => {
+    const token = localStorage.getItem("token");
+    try {
+      dispatch(deleteJobStart());
+      const { data } = await axios.delete(
+        `${proxy}https://jobscamp-api.herokuapp.com/jobs/${id}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      dispatch(deleteJobSuccess(data));
+    } catch (error) {
+      dispatch(deleteJobFailure(error));
+    }
+  };
+}
+
+export { createJob, getJobs, getMyJobs, editJob, deleteJob };

@@ -1,16 +1,17 @@
-import React, { useEffect, useState, memo } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
 // App imports
-import styles from "./JobList.module.css";
+
 import Card from "../../components/card/Card";
 import NavContainer from "../NavContainer/NavContainer";
 import Search from "../../components/search/Search";
-import { getJobs } from "../../actions/jobActions";
+import { getMyJobs, deleteJob } from "../../actions/jobActions";
 import Spinner from "../../components/spinner/Spinner";
+import styles from "./MyJobs.module.css";
 
-function JobList({ onGetJobs, isLoading, jobs }) {
+function MyJobs({ onGetJobs, isLoading, jobs, onDeleteJob }) {
   const [queryType, setQueryType] = useState("role");
   const [term, setTerm] = useState("");
   const [sortType, setSortType] = useState("createdAt:desc");
@@ -25,7 +26,7 @@ function JobList({ onGetJobs, isLoading, jobs }) {
 
   const renderJobs = () => {
     return jobs.map((job) => {
-      return <Card job={job} key={job._id} />;
+      return <Card job={job} key={job._id} action onDeleteJob={onDeleteJob} />;
     });
   };
 
@@ -59,8 +60,9 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     onGetJobs: (queryType, term, sortType) =>
-      dispatch(getJobs(queryType, term, sortType)),
+      dispatch(getMyJobs(queryType, term, sortType)),
+    onDeleteJob: (id) => dispatch(deleteJob(id)),
   };
 }
 
-export default memo(connect(mapStateToProps, mapDispatchToProps)(JobList));
+export default connect(mapStateToProps, mapDispatchToProps)(MyJobs);

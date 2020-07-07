@@ -13,6 +13,8 @@ import JobNew from "./containers/job-new/JobNew";
 import ProfileContainer from "./containers/profileContainer/ProfileContainer";
 import Logout from "./containers/logout/Logout";
 import { checkAuthState } from "./actions/authActions";
+import MyJobs from "./containers/my-jobs/MyJobs";
+import JobEdit from "./containers/job-edit/JobEdit";
 
 function App({ onAuth, isAuthenticated }) {
   const history = useHistory();
@@ -36,6 +38,8 @@ function App({ onAuth, isAuthenticated }) {
         <Route exact path="/jobs" component={JobList} />
         <Route exact path="/jobs/new" component={JobNew} />
         <Route exact path="/profile" component={ProfileContainer} />
+        <Route exact path="/my-jobs" component={MyJobs} />
+        <Route path="/my-jobs/:id" component={JobEdit} />
         <Route exact path="/logout" component={Logout} />
         <Redirect to="/" />
       </Switch>

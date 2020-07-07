@@ -6,6 +6,8 @@ import Spinner from "../spinner/Spinner";
 import Modal from "../modal/Modal";
 import Button from "../button/Button";
 
+import logo from "../../assets/logo.jpeg";
+
 export default function Profile({
   onUploadLogo,
   _id,
@@ -52,6 +54,10 @@ export default function Profile({
                     className={styles.img}
                     src={`https://jobscamp-api.herokuapp.com/companies/${_id}/logo?${imgHash}`}
                     alt=""
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = logo;
+                    }}
                   />
                 </figure>
                 <label htmlFor="file" className={styles.upload}>

@@ -1,10 +1,14 @@
 import React from "react";
+import { useHistory } from "react-router-dom";
 import moment from "moment";
 
 import styles from "./Card.module.css";
+import logo from "../../assets/logo.jpeg";
 
-export default function Card({ job }) {
+export default function Card({ job, action, onDeleteJob }) {
   let skillsArray;
+
+  const history = useHistory();
 
   if (job) {
     skillsArray = job.skills
@@ -20,6 +24,10 @@ export default function Card({ job }) {
           className={styles.img}
           src={`https://jobscamp-api.herokuapp.com/companies/${job.owner}/logo`}
           alt=""
+          onError={(e) => {
+            e.target.onerror = null;
+            e.target.src = logo;
+          }}
         />
       </figure>
 
@@ -41,6 +49,20 @@ export default function Card({ job }) {
           <li>{job.location}</li>
         </ul>
       </div>
+
+      {action && (
+        <div className={styles.action}>
+          <span
+            className="material-icons"
+            onClick={() => history.push(`/my-jobs/${job._id}`)}
+          >
+            edit
+          </span>
+          <span className="material-icons" onClick={() => onDeleteJob(job._id)}>
+            delete
+          </span>
+        </div>
+      )}
     </div>
   );
 }

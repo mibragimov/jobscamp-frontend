@@ -10,6 +10,7 @@ export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case types.CREATE_JOB_START:
     case types.GET_JOBS_START:
+    case types.DELETE_JOB_START:
       return {
         ...state,
         loading: true,
@@ -23,6 +24,7 @@ export default (state = INITIAL_STATE, action) => {
       };
     case types.CREATE_JOB_FAILURE:
     case types.GET_JOBS_FAILURE:
+    case types.DELETE_JOB_FAILURE:
       return {
         ...state,
         error: action.error,
@@ -37,6 +39,13 @@ export default (state = INITIAL_STATE, action) => {
       };
     case types.DELETE_ACCOUNT_SUCCESS:
       return INITIAL_STATE;
+    case types.DELETE_JOB_SUCCESS:
+      return {
+        ...state,
+        jobs: state.jobs.filter((job) => job._id !== action.data._id),
+        loading: false,
+        error: null,
+      };
     default:
       return state;
   }

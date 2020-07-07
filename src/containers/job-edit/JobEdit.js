@@ -1,30 +1,31 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 
 // App imports
 import NavContainer from "../NavContainer/NavContainer";
-import styles from "./JobNew.module.css";
+import styles from "../job-new/JobNew.module.css";
 import Input from "../../components/input/Input";
 import Button from "../../components/button/Button";
-import { createJob } from "../../actions/jobActions";
+import { editJob } from "../../actions/jobActions";
 
-function JobNew({ onCreateJob, isLoading }) {
-  const [role, setRole] = useState("");
-  const [type, setType] = useState("");
-  const [skills, setSkills] = useState("");
-  const [location, setLocation] = useState("");
+function JobEdit({ onEditJob, selectedJob }) {
+  const [role, setRole] = useState(selectedJob.role);
+  const [type, setType] = useState(selectedJob.type);
+  const [skills, setSkills] = useState(...selectedJob.skills);
+  const [location, setLocation] = useState(selectedJob.location);
 
   const history = useHistory();
+  const params = useParams();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onCreateJob({ role, type, skills, location }, history);
+    onEditJob(params.id, { role, type, skills, location }, history);
   };
   return (
     <div className={styles.container}>
       <NavContainer />
-      <h3>Create a new job</h3>
+      <h3>Edit the following job</h3>
       <form onSubmit={handleSubmit}>
         <Input
           type="text"
@@ -56,23 +57,28 @@ function JobNew({ onCreateJob, isLoading }) {
         />
         <div className={styles.action}>
           <Button text="Cancel" onClick={() => history.goBack()} red />
-          <Button text="Submit" isLoading={isLoading} />
+          <Button text="Submit" />
         </div>
       </form>
     </div>
   );
 }
 
-const mapStateToProps = (state) => ({
-  isLoading: state.job.loading,
-  error: state.job.error,
-});
-
-const mapDispatchToProps = (dispatch) => {
+const mapStateToProps = (state, ownProps) => {
   return {
-    onCreateJob: ({ role, type, skills, location }, history) =>
-      dispatch(createJob({ role, type, skills, location }, history)),
+    isLoading: state.job.loading,
+    error: state.job.error,
+    selectedJob: state.job.jobs.find(
+      (job) => job._id === ownProps.match.params.id
+    ),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(JobNew);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onEditJob: (id, { role, type, skills, location }, history) =>
+      dispatch(editJob(id, { role, type, skills, location }, history)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(JobEdit);
