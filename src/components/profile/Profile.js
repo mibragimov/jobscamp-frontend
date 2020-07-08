@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import styles from "./Profile.module.css";
 
@@ -13,14 +13,42 @@ export default function Profile({
   _id,
   profile,
   isLoading,
+  isDeleting,
+  isEditing,
   onDeleteAccount,
   onSelectFile,
   showModal,
   onShowModal,
   imgHash,
   uploading,
+  onEditProfile,
 }) {
+  const [editName, setEditName] = useState(false);
+  const [name, setName] = useState("");
+
   const history = useHistory();
+
+  const handleChange = (e) => {
+    const { value } = e.target;
+    if (value !== "") {
+      setEditName(true);
+      setName(value);
+    } else {
+      setEditName(false);
+      setName(value);
+    }
+  };
+
+  const handleSubmitNameChange = async () => {
+    
+    await onEditProfile({ name });
+    setEditName(false);
+  };
+
+  const handleCancelNameChange = (e) => {
+    setEditName(false);
+    setName('');
+  };
 
   const renderProfile = () => {
     return (
@@ -44,7 +72,28 @@ export default function Profile({
             <div className={styles.box}>
               <div className={styles.name}>
                 <label>Organization</label>
-                <input type="text" placeholder={profile.name} />
+                <input
+                  type="text"
+                  placeholder={profile.name}
+                  value={name}
+                  onChange={handleChange}
+                />
+                {editName ? (
+                  <>
+                    <label
+                      className={`${styles.upload}`}
+                      onClick={handleCancelNameChange}
+                    >
+                      Cancel
+                    </label>
+                    <label
+                      className={`${styles.upload}`}
+                      onClick={handleSubmitNameChange}
+                    >
+                      {isEditing ? 'Saving...' :  'Save'}
+                    </label>
+                  </>
+                ) : null}
               </div>
 
               <div className={styles.avatar}>
@@ -102,7 +151,7 @@ export default function Profile({
             <p>Are you sure you want to delete your account?</p>
             <div className={styles.modalAction}>
               <Button text="No" red onClick={() => onShowModal(false)} />
-              <Button text="Yes" onClick={() => onDeleteAccount(history)} />
+              <Button text="Yes" onClick={() => onDeleteAccount(history)} isLoading={isDeleting} />
             </div>
           </div>
         </Modal>

@@ -9,7 +9,7 @@ import Input from "../../components/input/Input";
 import Button from "../../components/button/Button";
 import { createJob } from "../../actions/jobActions";
 
-function JobNew({ onCreateJob, isLoading }) {
+function JobNew({ onCreateJob, isCreating }) {
   const [role, setRole] = useState("");
   const [type, setType] = useState("");
   const [skills, setSkills] = useState("");
@@ -56,7 +56,7 @@ function JobNew({ onCreateJob, isLoading }) {
         />
         <div className={styles.action}>
           <Button text="Cancel" onClick={() => history.goBack()} red />
-          <Button text="Submit" isLoading={isLoading} />
+          <Button text="Submit" isLoading={isCreating} />
         </div>
       </form>
     </div>
@@ -64,7 +64,7 @@ function JobNew({ onCreateJob, isLoading }) {
 }
 
 const mapStateToProps = (state) => ({
-  isLoading: state.job.loading,
+  isCreating: state.job.creating,
   error: state.job.error,
 });
 

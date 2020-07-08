@@ -34,8 +34,6 @@ function JobList({ onGetJobs, isLoading, jobs }) {
     });
   };
 
-  console.log(jobs);
-
   return (
     <div className={styles.container}>
       <NavContainer />

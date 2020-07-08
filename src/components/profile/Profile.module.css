@@ -74,7 +74,7 @@
   flex-basis: 45%;
 }
 .box .avatar h4,
-.name label {
+label {
   font-size: 1.7rem;
   font-weight: 500;
   color: #777;

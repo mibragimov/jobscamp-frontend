@@ -5,6 +5,7 @@ import {
   uploadAvatar,
   getProfile,
   deleteAccount,
+  editProfile,
 } from "../../actions/profileActions";
 
 import Profile from "../../components/profile/Profile";
@@ -16,12 +17,16 @@ function ProfileContainer({
   onGetProfile,
   profile,
   isLoading,
+  isDeleting,
+  isEditing,
   onDeleteAccount,
+  onEditProfile,
   uploading,
 }) {
   const [file, setFile] = useState(undefined);
   const [imgHash, setImgHash] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const [name, setName] = useState(profile.name);
 
   useEffect(() => {
     onGetProfile();
@@ -40,6 +45,10 @@ function ProfileContainer({
   const handleSelectFile = (e) => {
     setFile(e.target.files[0]);
   };
+
+  const handleNameChange = e => {
+    setName(e.target.value)
+  }
   return (
     <div>
       <NavContainer />
@@ -48,6 +57,8 @@ function ProfileContainer({
         _id={_id}
         profile={profile}
         isLoading={isLoading}
+        isDeleting={isDeleting}
+        isEditing={isEditing}
         onDeleteAccount={onDeleteAccount}
         onSelectFile={handleSelectFile}
         file={file}
@@ -55,6 +66,7 @@ function ProfileContainer({
         onShowModal={setShowModal}
         imgHash={imgHash}
         uploading={uploading}
+        onEditProfile={onEditProfile}
       />
     </div>
   );
@@ -66,6 +78,8 @@ function mapStateToProps(state) {
     profile: state.profile.profileInfo,
     isLoading: state.profile.loading,
     uploading: state.profile.uploading,
+    isDeleting: state.profile.deleting,
+    isEditing: state.profile.editing
   };
 }
 
@@ -74,6 +88,7 @@ function mapDispatchToProps(dispatch) {
     onUploadLogo: (file) => dispatch(uploadAvatar(file)),
     onGetProfile: () => dispatch(getProfile()),
     onDeleteAccount: (history) => dispatch(deleteAccount(history)),
+    onEditProfile: (obj) => dispatch(editProfile(obj)),
   };
 }
 

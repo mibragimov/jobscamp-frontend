@@ -122,4 +122,40 @@ function deleteAccount(history) {
   };
 }
 
-export { uploadAvatar, getProfile, deleteAccount };
+function editProfileStart() {
+  return {
+    type: types.EDIT_PROFILE_START,
+  };
+}
+function editProfileSuccess(data) {
+  return {
+    type: types.EDIT_PROFILE_SUCCESS,
+    data,
+  };
+}
+function editProfileFailure(err) {
+  return {
+    type: types.EDIT_PROFILE_FAILURE,
+    error: err.message,
+  };
+}
+
+function editProfile(obj) {
+  return async (dispatch) => {
+    const token = localStorage.getItem("token");
+    try {
+      dispatch(editProfileStart());
+      const {
+        data,
+      } = await axios.patch(
+        `${proxy}https://jobscamp-api.herokuapp.com/companies/me`,
+        obj,
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      dispatch(editProfileSuccess(data));
+    } catch (error) {
+      dispatch(editProfileFailure(error));
+    }
+  };
+}
+export { uploadAvatar, getProfile, deleteAccount, editProfile };
