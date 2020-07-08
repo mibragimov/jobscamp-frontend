@@ -24,10 +24,17 @@ function JobList({ onGetJobs, isLoading, jobs }) {
   }, [onGetJobs, queryType, term, sortType]);
 
   const renderJobs = () => {
+    if (jobs.length === 0 && !isLoading) {
+      return (
+        <h3 style={{ textAlign: "center" }}>Can't find any matching results</h3>
+      );
+    }
     return jobs.map((job) => {
       return <Card job={job} key={job._id} />;
     });
   };
+
+  console.log(jobs);
 
   return (
     <div className={styles.container}>

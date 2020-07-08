@@ -25,6 +25,11 @@ function MyJobs({ onGetJobs, isLoading, jobs, onDeleteJob }) {
   }, [onGetJobs, queryType, term, sortType]);
 
   const renderJobs = () => {
+    if (jobs.length === 0 && !isLoading) {
+      return (
+        <h3 style={{ textAlign: "center" }}>Can't find any matching results</h3>
+      );
+    }
     return jobs.map((job) => {
       return <Card job={job} key={job._id} action onDeleteJob={onDeleteJob} />;
     });

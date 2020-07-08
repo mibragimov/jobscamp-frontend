@@ -26,7 +26,7 @@ export default function Form({ loginForm, onSignUp, onLogin, isLoading }) {
     <form className={styles.form} onSubmit={handleSignUp}>
       <Input
         type="text"
-        placeholder="name"
+        placeholder="Organization"
         required
         onChange={setName}
         value={name}
