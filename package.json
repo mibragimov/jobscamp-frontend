@@ -4,6 +4,7 @@
   "private": true,
   "engines": {
     "node": "12.16.1",
+    "npm": "6.13.4",
     "yarn": "1.22.0"
   },
   "dependencies": {
@@ -23,6 +24,7 @@
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
     "reselect": "^4.0.0",
+    "serve": "^11.3.2",
     "styled-components": "^5.1.1",
     "thunk": "^0.0.1"
   },
