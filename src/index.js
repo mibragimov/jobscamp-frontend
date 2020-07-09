@@ -11,7 +11,12 @@ import reducer from "./reducers";
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
   reducer,
-  {},
+  {
+    auth: {
+      token: localStorage.getItem("token"),
+      _id: localStorage.getItem("_id"),
+    },
+  },
   composeEnhancers(applyMiddleware(thunk))
 );
 

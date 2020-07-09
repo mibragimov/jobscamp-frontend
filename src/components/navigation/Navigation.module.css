@@ -3,6 +3,7 @@
   background: #3862aa;
   padding: 3.5rem;
   margin-bottom: 5rem;
+  backface-visibility: hidden;
 }
 
 .nav ul {

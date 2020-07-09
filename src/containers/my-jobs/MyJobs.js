@@ -11,7 +11,7 @@ import { getMyJobs, deleteJob } from "../../actions/jobActions";
 import Spinner from "../../components/spinner/Spinner";
 import styles from "./MyJobs.module.css";
 
-function MyJobs({ onGetJobs, isLoading, jobs, onDeleteJob }) {
+function MyJobs({ onGetJobs, isLoading, jobs, onDeleteJob, companyID }) {
   const [queryType, setQueryType] = useState("role");
   const [term, setTerm] = useState("");
   const [sortType, setSortType] = useState("createdAt:desc");
@@ -31,7 +31,14 @@ function MyJobs({ onGetJobs, isLoading, jobs, onDeleteJob }) {
       );
     }
     return jobs.map((job) => {
-      return <Card job={job} key={job._id} action onDeleteJob={onDeleteJob} />;
+      return (
+        <Card
+          job={job}
+          key={job._id}
+          onDeleteJob={onDeleteJob}
+          companyID={companyID}
+        />
+      );
     });
   };
 
@@ -59,6 +66,7 @@ function mapStateToProps(state) {
   return {
     jobs: state.job.jobs,
     isLoading: state.job.loading,
+    companyID: state.auth._id,
   };
 }
 

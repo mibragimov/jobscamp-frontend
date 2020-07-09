@@ -5,7 +5,7 @@ import moment from "moment";
 import styles from "./Card.module.css";
 import logo from "../../assets/logo.jpeg";
 
-export default function Card({ job, action, onDeleteJob }) {
+export default function Card({ job, onDeleteJob, companyID }) {
   let skillsArray;
 
   const history = useHistory();
@@ -50,7 +50,7 @@ export default function Card({ job, action, onDeleteJob }) {
         </ul>
       </div>
 
-      {action && (
+      {job.owner === companyID ? (
         <div className={styles.action}>
           <span
             className="material-icons"
@@ -62,7 +62,7 @@ export default function Card({ job, action, onDeleteJob }) {
             delete
           </span>
         </div>
-      )}
+      ) : null}
     </div>
   );
 }

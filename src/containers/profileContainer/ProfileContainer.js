@@ -26,7 +26,6 @@ function ProfileContainer({
   const [file, setFile] = useState(undefined);
   const [imgHash, setImgHash] = useState("");
   const [showModal, setShowModal] = useState(false);
-  const [name, setName] = useState(profile.name);
 
   useEffect(() => {
     onGetProfile();
@@ -46,9 +45,6 @@ function ProfileContainer({
     setFile(e.target.files[0]);
   };
 
-  const handleNameChange = e => {
-    setName(e.target.value)
-  }
   return (
     <div>
       <NavContainer />
@@ -79,7 +75,7 @@ function mapStateToProps(state) {
     isLoading: state.profile.loading,
     uploading: state.profile.uploading,
     isDeleting: state.profile.deleting,
-    isEditing: state.profile.editing
+    isEditing: state.profile.editing,
   };
 }
 

@@ -9,7 +9,7 @@ import Input from "../../components/input/Input";
 import Button from "../../components/button/Button";
 import { editJob } from "../../actions/jobActions";
 
-function JobEdit({ onEditJob, selectedJob }) {
+function JobEdit({ onEditJob, selectedJob, isEditing }) {
   const [role, setRole] = useState(selectedJob.role);
   const [type, setType] = useState(selectedJob.type);
   const [skills, setSkills] = useState(...selectedJob.skills);
@@ -57,12 +57,21 @@ function JobEdit({ onEditJob, selectedJob }) {
         />
         <div className={styles.action}>
           <Button text="Cancel" onClick={() => history.goBack()} red />
-          <Button text="Submit" />
+          <Button text="Submit" isLoading={isEditing} />
         </div>
       </form>
     </div>
   );
 }
+
+JobEdit.defaultProps = {
+  selectedJob: {
+    role: "",
+    type: "",
+    skills: "",
+    location: "",
+  },
+};
 
 const mapStateToProps = (state, ownProps) => {
   return {
@@ -71,6 +80,7 @@ const mapStateToProps = (state, ownProps) => {
     selectedJob: state.job.jobs.find(
       (job) => job._id === ownProps.match.params.id
     ),
+    isEditing: state.job.editing,
   };
 };
 

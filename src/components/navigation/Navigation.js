@@ -13,7 +13,7 @@ export default function Navigation({ isAuth }) {
           </Link>
         </li>
         <li className={styles.company}>
-          {isAuth ? <Link to="/my-jobs">My jobs</Link> : null}
+          {isAuth ? <Link to="/my-jobs">My Jobs</Link> : null}
         </li>
         <li className={styles.company}>
           <Link to="/profile">Profile</Link>

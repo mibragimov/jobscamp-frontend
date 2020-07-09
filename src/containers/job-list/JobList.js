@@ -1,4 +1,4 @@
-import React, { useEffect, useState, memo } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
@@ -10,7 +10,7 @@ import Search from "../../components/search/Search";
 import { getJobs } from "../../actions/jobActions";
 import Spinner from "../../components/spinner/Spinner";
 
-function JobList({ onGetJobs, isLoading, jobs }) {
+function JobList({ onGetJobs, isLoading, jobs, companyID }) {
   const [queryType, setQueryType] = useState("role");
   const [term, setTerm] = useState("");
   const [sortType, setSortType] = useState("createdAt:desc");
@@ -30,7 +30,7 @@ function JobList({ onGetJobs, isLoading, jobs }) {
       );
     }
     return jobs.map((job) => {
-      return <Card job={job} key={job._id} />;
+      return <Card job={job} key={job._id} companyID={companyID} />;
     });
   };
 
@@ -58,6 +58,7 @@ function mapStateToProps(state) {
   return {
     jobs: state.job.jobs,
     isLoading: state.job.loading,
+    companyID: state.auth._id,
   };
 }
 
@@ -68,4 +69,4 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default memo(connect(mapStateToProps, mapDispatchToProps)(JobList));
+export default connect(mapStateToProps, mapDispatchToProps)(JobList);

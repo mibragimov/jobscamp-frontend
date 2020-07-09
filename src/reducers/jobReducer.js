@@ -6,6 +6,7 @@ const INITIAL_STATE = {
   jobs: [],
   creating: false,
   deleting: false,
+  editing: false,
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -16,41 +17,40 @@ export default (state = INITIAL_STATE, action) => {
         loading: true,
         error: null,
       };
-      case types.GET_JOBS_SUCCESS:
+    case types.GET_JOBS_SUCCESS:
       return {
         ...state,
         loading: false,
         error: null,
         jobs: action.jobs,
       };
-      case types.GET_JOBS_FAILURE:
-    
-        return {
-          ...state,
-          error: action.error,
-          loading: false,
-        };
-      case types.CREATE_JOB_START:
-        return {
-          ...state,
-          creating: true
-        }
+    case types.GET_JOBS_FAILURE:
+      return {
+        ...state,
+        error: action.error,
+        loading: false,
+      };
+    case types.CREATE_JOB_START:
+      return {
+        ...state,
+        creating: true,
+      };
     case types.CREATE_JOB_SUCCESS:
       return {
         ...state,
-        creating: false
+        creating: false,
       };
     case types.CREATE_JOB_FAILURE:
       return {
         ...state,
-        creating: false
-      }
-      case types.DELETE_JOB_START:
-        return {
-          ...state,
-          deleting: true
-        }
-        case types.DELETE_JOB_SUCCESS:
+        creating: false,
+      };
+    case types.DELETE_JOB_START:
+      return {
+        ...state,
+        deleting: true,
+      };
+    case types.DELETE_JOB_SUCCESS:
       return {
         ...state,
         jobs: state.jobs.filter((job) => job._id !== action.data._id),
@@ -58,16 +58,31 @@ export default (state = INITIAL_STATE, action) => {
         error: null,
       };
 
-        case types.DELETE_JOB_FAILURE:
-          return {
-            ...state,
-            deleting: false
-          }
-   
-    
+    case types.DELETE_JOB_FAILURE:
+      return {
+        ...state,
+        deleting: false,
+      };
+
     case types.DELETE_ACCOUNT_SUCCESS:
       return INITIAL_STATE;
-    
+
+    case types.EDIT_JOB_START:
+      return {
+        ...state,
+        editing: true,
+      };
+    case types.EDIT_JOB_SUCCESS:
+      return {
+        ...state,
+        editing: false,
+      };
+    case types.EDIT_JOB_FAILURE:
+      return {
+        ...state,
+        editing: false,
+      };
+
     default:
       return state;
   }

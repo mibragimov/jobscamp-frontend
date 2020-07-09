@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import styles from "./Profile.module.css";
 
@@ -40,14 +40,13 @@ export default function Profile({
   };
 
   const handleSubmitNameChange = async () => {
-    
     await onEditProfile({ name });
     setEditName(false);
   };
 
   const handleCancelNameChange = (e) => {
     setEditName(false);
-    setName('');
+    setName("");
   };
 
   const renderProfile = () => {
@@ -90,7 +89,7 @@ export default function Profile({
                       className={`${styles.upload}`}
                       onClick={handleSubmitNameChange}
                     >
-                      {isEditing ? 'Saving...' :  'Save'}
+                      {isEditing ? "Saving..." : "Save"}
                     </label>
                   </>
                 ) : null}
@@ -151,7 +150,11 @@ export default function Profile({
             <p>Are you sure you want to delete your account?</p>
             <div className={styles.modalAction}>
               <Button text="No" red onClick={() => onShowModal(false)} />
-              <Button text="Yes" onClick={() => onDeleteAccount(history)} isLoading={isDeleting} />
+              <Button
+                text="Yes"
+                onClick={() => onDeleteAccount(history)}
+                isLoading={isDeleting}
+              />
             </div>
           </div>
         </Modal>

@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { Route, Switch, useHistory, Redirect } from "react-router-dom";
+import React from "react";
+import { Route, Switch, Redirect } from "react-router-dom";
 import { connect } from "react-redux";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -12,17 +12,10 @@ import JobList from "./containers/job-list/JobList";
 import JobNew from "./containers/job-new/JobNew";
 import ProfileContainer from "./containers/profileContainer/ProfileContainer";
 import Logout from "./containers/logout/Logout";
-import { checkAuthState } from "./actions/authActions";
 import MyJobs from "./containers/my-jobs/MyJobs";
 import JobEdit from "./containers/job-edit/JobEdit";
 
-function App({ onAuth, isAuthenticated }) {
-  const history = useHistory();
-
-  useEffect(() => {
-    onAuth(history);
-  }, [onAuth, history]);
-
+function App({ isAuthenticated }) {
   let routes = (
     <Switch>
       <Route exact path="/" component={Landing} />
@@ -64,10 +57,4 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    onAuth: (history) => dispatch(checkAuthState(history)),
-  };
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps)(App);

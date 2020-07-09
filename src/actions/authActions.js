@@ -98,6 +98,7 @@ function logout() {
   };
 }
 
+/* since we set token in redux initial state below code in not neccessary
 function checkAuthState(history) {
   return async function (dispatch) {
     const token = localStorage.getItem("token");
@@ -110,5 +111,6 @@ function checkAuthState(history) {
     }
   };
 }
+*/
 
-export { signUp, login, logout, checkAuthState };
+export { signUp, login, logout };
