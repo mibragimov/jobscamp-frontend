@@ -2,8 +2,6 @@ import axios from "axios";
 import * as types from "./types";
 import { toast } from "react-toastify";
 
-const proxy = "https://cors-anywhere.herokuapp.com/";
-
 function createJobStart() {
   return {
     type: types.CREATE_JOB_START,
@@ -29,11 +27,9 @@ function createJob(job, history) {
       dispatch(createJobStart());
       const {
         data,
-      } = await axios.post(
-        `${proxy}https://jobscamp-api.herokuapp.com/jobs`,
-        job,
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+      } = await axios.post(`https://jobscamp-api.herokuapp.com/jobs`, job, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       dispatch(createJobSuccess(data));
       toast.success("Job created successfully!");
       history.push("/jobs");
@@ -67,7 +63,7 @@ function getJobs(query, term, sortBy) {
     try {
       dispatch(getJobsStart());
       const { data } = await axios.get(
-        `${proxy}https://jobscamp-api.herokuapp.com/jobs?${query}=${term}&sortBy=${sortBy}`
+        `https://jobscamp-api.herokuapp.com/jobs?${query}=${term}&sortBy=${sortBy}`
       );
       dispatch(getJobsSuccess(data));
     } catch (error) {
@@ -81,7 +77,7 @@ function getMyJobs(query, term, sortBy) {
     try {
       dispatch(getJobsStart());
       const { data } = await axios.get(
-        `${proxy}https://jobscamp-api.herokuapp.com/jobs/me?${query}=${term}&sortBy=${sortBy}`,
+        `https://jobscamp-api.herokuapp.com/jobs/me?${query}=${term}&sortBy=${sortBy}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -116,7 +112,7 @@ function editJob(id, update, history) {
     try {
       dispatch(editJobStart());
       await axios.patch(
-        `${proxy}https://jobscamp-api.herokuapp.com/jobs/${id}`,
+        `https://jobscamp-api.herokuapp.com/jobs/${id}`,
         update,
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -154,7 +150,7 @@ function deleteJob(id) {
     try {
       dispatch(deleteJobStart());
       const { data } = await axios.delete(
-        `${proxy}https://jobscamp-api.herokuapp.com/jobs/${id}`,
+        `https://jobscamp-api.herokuapp.com/jobs/${id}`,
         {
           headers: { Authorization: `Bearer ${token}` },
         }

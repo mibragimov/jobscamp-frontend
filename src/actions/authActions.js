@@ -1,8 +1,6 @@
 import axios from "axios";
 import * as types from "./types";
 
-const proxy = "https://cors-anywhere.herokuapp.com/";
-
 function signUpStart() {
   return {
     type: types.SIGN_UP_START,
@@ -29,7 +27,7 @@ function signUp(company, history) {
     try {
       dispatch(signUpStart());
       const { data } = await axios.post(
-        proxy + "https://jobscamp-api.herokuapp.com/companies",
+        "https://jobscamp-api.herokuapp.com/companies",
         company
       );
       localStorage.setItem("token", data.token);
@@ -69,7 +67,7 @@ function login(company, history) {
     try {
       dispatch(loginStart());
       const { data } = await axios.post(
-        proxy + "https://jobscamp-api.herokuapp.com/companies/login",
+        "https://jobscamp-api.herokuapp.com/companies/login",
         company
       );
       localStorage.setItem("token", data.token);
@@ -87,7 +85,7 @@ function logout() {
     const token = localStorage.getItem("token");
     try {
       await axios.post(
-        proxy + "https://jobscamp-api.herokuapp.com/companies/logout",
+        "https://jobscamp-api.herokuapp.com/companies/logout",
         undefined,
         { headers: { Authorization: `Bearer ${token}` } }
       );

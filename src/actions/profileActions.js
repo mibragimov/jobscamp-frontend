@@ -2,8 +2,6 @@ import axios from "axios";
 import * as types from "./types";
 import { toast } from "react-toastify";
 
-const proxy = "https://cors-anywhere.herokuapp.com/";
-
 function uploadAvatarStart() {
   return {
     type: types.UPLOAD_AVATAR_START,
@@ -37,7 +35,7 @@ function uploadAvatar(file) {
     try {
       dispatch(uploadAvatarStart());
       await axios.post(
-        proxy + "https://jobscamp-api.herokuapp.com/companies/me/logo",
+        "https://jobscamp-api.herokuapp.com/companies/me/logo",
         file,
         config
       );
@@ -75,10 +73,9 @@ function getProfile() {
       dispatch(getProfileStart());
       const {
         data,
-      } = await axios.get(
-        `${proxy}https://jobscamp-api.herokuapp.com/companies/me`,
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+      } = await axios.get(`https://jobscamp-api.herokuapp.com/companies/me`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       dispatch(getProfileSuccess(data));
     } catch (error) {
       dispatch(getProfileFailure(error));
@@ -108,10 +105,9 @@ function deleteAccount(history) {
     const token = localStorage.getItem("token");
     try {
       dispatch(deleteAccountStart());
-      await axios.delete(
-        `${proxy}https://jobscamp-api.herokuapp.com/companies/me`,
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+      await axios.delete(`https://jobscamp-api.herokuapp.com/companies/me`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
       dispatch(deleteAccountSuccess());
       localStorage.removeItem("token");
       localStorage.removeItem("_id");
@@ -148,7 +144,7 @@ function editProfile(obj) {
       const {
         data,
       } = await axios.patch(
-        `${proxy}https://jobscamp-api.herokuapp.com/companies/me`,
+        `https://jobscamp-api.herokuapp.com/companies/me`,
         obj,
         { headers: { Authorization: `Bearer ${token}` } }
       );
