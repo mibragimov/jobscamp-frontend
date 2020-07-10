@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Fragment } from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 
@@ -9,11 +9,20 @@ import NavContainer from "../NavContainer/NavContainer";
 import Search from "../../components/search/Search";
 import { getJobs } from "../../actions/jobActions";
 import Spinner from "../../components/spinner/Spinner";
+import Pagination from "../../components/pagination/Pagination";
 
 function JobList({ onGetJobs, isLoading, jobs, companyID }) {
   const [queryType, setQueryType] = useState("role");
   const [term, setTerm] = useState("");
   const [sortType, setSortType] = useState("createdAt:desc");
+
+  // pagination
+  const [resPerPage, setResPerPage] = useState(4);
+  const [currPage, setCurrPage] = useState(1);
+
+  const start = (currPage - 1) * resPerPage;
+  const end = currPage * resPerPage;
+  const paginate = (page) => setCurrPage(page);
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -29,9 +38,20 @@ function JobList({ onGetJobs, isLoading, jobs, companyID }) {
         <h3 style={{ textAlign: "center" }}>Can't find any matching results</h3>
       );
     }
-    return jobs.map((job) => {
-      return <Card job={job} key={job._id} companyID={companyID} />;
-    });
+    return (
+      <Fragment>
+        {jobs.slice(start, end).map((job) => {
+          return <Card job={job} key={job._id} companyID={companyID} />;
+        })}
+
+        <Pagination
+          resResPage={resPerPage}
+          numOfRes={jobs.length}
+          paginate={paginate}
+          currPage={currPage}
+        />
+      </Fragment>
+    );
   };
 
   return (

@@ -1,0 +1,27 @@
+.pagination {
+  width: 50%;
+  margin: 2rem auto;
+}
+
+.pagination ul {
+  list-style: none;
+  text-align: center;
+}
+.pagination ul li {
+  display: inline;
+}
+
+.page:link,
+.page:visited {
+  text-decoration: none;
+  color: #3862aa;
+  border: 1px solid #eee;
+  border-radius: 3px;
+  padding: 0.3rem 0.8rem;
+}
+
+.page:hover,
+.page.active {
+  background-color: #3862aa;
+  color: #fff;
+}

@@ -3,6 +3,7 @@
   margin: 0 auto;
   transform: translateY(-6.5rem);
   position: relative;
+  backface-visibility: hidden;
 }
 
 .search input {
