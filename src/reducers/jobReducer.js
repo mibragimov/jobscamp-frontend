@@ -1,4 +1,4 @@
-import * as types from "../actions/types";
+import * as types from '../actions/types';
 
 const INITIAL_STATE = {
   loading: false,
@@ -39,6 +39,7 @@ export default (state = INITIAL_STATE, action) => {
       return {
         ...state,
         creating: false,
+        jobs: [action.job, ...state.jobs],
       };
     case types.CREATE_JOB_FAILURE:
       return {
@@ -73,9 +74,16 @@ export default (state = INITIAL_STATE, action) => {
         editing: true,
       };
     case types.EDIT_JOB_SUCCESS:
+      const index = state.jobs.findIndex((job) => job._id === action.job._id);
+
       return {
         ...state,
         editing: false,
+        jobs: [
+          ...state.jobs.slice(0, index),
+          { ...action.job },
+          ...state.jobs.slice(index + 1),
+        ],
       };
     case types.EDIT_JOB_FAILURE:
       return {

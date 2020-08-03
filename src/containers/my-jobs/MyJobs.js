@@ -1,21 +1,21 @@
-import React, { useState, useEffect, Fragment } from "react";
-import { Link } from "react-router-dom";
-import { connect } from "react-redux";
+import React, { useState, useEffect, Fragment } from 'react';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 // App imports
 
-import Card from "../../components/card/Card";
-import NavContainer from "../NavContainer/NavContainer";
-import Search from "../../components/search/Search";
-import { getMyJobs, deleteJob } from "../../actions/jobActions";
-import Spinner from "../../components/spinner/Spinner";
-import styles from "./MyJobs.module.css";
-import Pagination from "../../components/pagination/Pagination";
+import Card from '../../components/card/Card';
+import NavContainer from '../NavContainer/NavContainer';
+import Search from '../../components/search/Search';
+import { getMyJobs, deleteJob } from '../../actions/jobActions';
+import Spinner from '../../components/spinner/Spinner';
+import styles from './MyJobs.module.css';
+import Pagination from '../../components/pagination/Pagination';
 
 function MyJobs({ onGetJobs, isLoading, jobs, onDeleteJob, companyID }) {
-  const [queryType, setQueryType] = useState("role");
-  const [term, setTerm] = useState("");
-  const [sortType, setSortType] = useState("createdAt:desc");
+  const [queryType, setQueryType] = useState('role');
+  const [term, setTerm] = useState('');
+  const [sortType, setSortType] = useState('createdAt:desc');
 
   // pagination
   const [resPerPage, setResPerPage] = useState(4);
@@ -36,7 +36,7 @@ function MyJobs({ onGetJobs, isLoading, jobs, onDeleteJob, companyID }) {
   const renderJobs = () => {
     if (jobs.length === 0 && !isLoading) {
       return (
-        <h3 style={{ textAlign: "center" }}>Can't find any matching results</h3>
+        <h3 style={{ textAlign: 'center' }}>Can't find any matching results</h3>
       );
     }
     return (

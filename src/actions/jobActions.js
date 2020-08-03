@@ -1,6 +1,6 @@
-import axios from "axios";
-import * as types from "./types";
-import { toast } from "react-toastify";
+import axios from 'axios';
+import * as types from './types';
+import { toast } from 'react-toastify';
 
 function createJobStart() {
   return {
@@ -22,20 +22,23 @@ function createJobFailure(err) {
 
 function createJob(job, history) {
   return async (dispatch) => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
     try {
       dispatch(createJobStart());
-      const {
-        data,
-      } = await axios.post(`https://jobscamp-api.herokuapp.com/jobs`, job, {
-        headers: { Authorization: `Bearer ${token}` },
-      });
+      const { data } = await axios.post(
+        `https://jobscamp-api.herokuapp.com/jobs`,
+        job,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+
       dispatch(createJobSuccess(data));
-      toast.success("Job created successfully!");
-      history.push("/jobs");
+      toast.success('Job created successfully!');
+      history.push('/jobs');
     } catch (error) {
       dispatch(createJobFailure(error));
-      toast.error("Error connecting with server");
+      toast.error('Error connecting with server');
     }
   };
 }
@@ -73,7 +76,7 @@ function getJobs(query, term, sortBy) {
 }
 function getMyJobs(query, term, sortBy) {
   return async (dispatch) => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
     try {
       dispatch(getJobsStart());
       const { data } = await axios.get(
@@ -94,9 +97,10 @@ function editJobStart() {
     type: types.EDIT_JOB_START,
   };
 }
-function editJobSuccess() {
+function editJobSuccess(job) {
   return {
     type: types.EDIT_JOB_SUCCESS,
+    job,
   };
 }
 function editJobFailure(err) {
@@ -108,18 +112,19 @@ function editJobFailure(err) {
 
 function editJob(id, update, history) {
   return async (dispatch) => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
     try {
       dispatch(editJobStart());
-      await axios.patch(
+      const { data } = await axios.patch(
         `https://jobscamp-api.herokuapp.com/jobs/${id}`,
         update,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      dispatch(editJobSuccess());
-      history.push("/my-jobs");
+
+      dispatch(editJobSuccess(data));
+      history.push('/my-jobs');
     } catch (error) {
       dispatch(editJobFailure(error));
     }
@@ -146,7 +151,7 @@ function deleteJobFailure(err) {
 
 function deleteJob(id) {
   return async (dispatch) => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem('token');
     try {
       dispatch(deleteJobStart());
       const { data } = await axios.delete(

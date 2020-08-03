@@ -1,20 +1,20 @@
-import React, { useEffect, useState, Fragment } from "react";
-import { Link } from "react-router-dom";
-import { connect } from "react-redux";
+import React, { useEffect, useState, Fragment } from 'react';
+import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 // App imports
-import styles from "./JobList.module.css";
-import Card from "../../components/card/Card";
-import NavContainer from "../NavContainer/NavContainer";
-import Search from "../../components/search/Search";
-import { getJobs } from "../../actions/jobActions";
-import Spinner from "../../components/spinner/Spinner";
-import Pagination from "../../components/pagination/Pagination";
+import styles from './JobList.module.css';
+import Card from '../../components/card/Card';
+import NavContainer from '../NavContainer/NavContainer';
+import Search from '../../components/search/Search';
+import { getJobs, deleteJob } from '../../actions/jobActions';
+import Spinner from '../../components/spinner/Spinner';
+import Pagination from '../../components/pagination/Pagination';
 
-function JobList({ onGetJobs, isLoading, jobs, companyID }) {
-  const [queryType, setQueryType] = useState("role");
-  const [term, setTerm] = useState("");
-  const [sortType, setSortType] = useState("createdAt:desc");
+function JobList({ onGetJobs, isLoading, jobs, companyID, onDeleteJob }) {
+  const [queryType, setQueryType] = useState('role');
+  const [term, setTerm] = useState('');
+  const [sortType, setSortType] = useState('createdAt:desc');
 
   // pagination
   const [resPerPage, setResPerPage] = useState(4);
@@ -35,13 +35,20 @@ function JobList({ onGetJobs, isLoading, jobs, companyID }) {
   const renderJobs = () => {
     if (jobs.length === 0 && !isLoading) {
       return (
-        <h3 style={{ textAlign: "center" }}>Can't find any matching results</h3>
+        <h3 style={{ textAlign: 'center' }}>Can't find any matching results</h3>
       );
     }
     return (
       <Fragment>
         {jobs.slice(start, end).map((job) => {
-          return <Card job={job} key={job._id} companyID={companyID} />;
+          return (
+            <Card
+              job={job}
+              key={job._id}
+              companyID={companyID}
+              onDeleteJob={onDeleteJob}
+            />
+          );
         })}
 
         <Pagination
@@ -86,6 +93,7 @@ function mapDispatchToProps(dispatch) {
   return {
     onGetJobs: (queryType, term, sortType) =>
       dispatch(getJobs(queryType, term, sortType)),
+    onDeleteJob: (id) => dispatch(deleteJob(id)),
   };
 }
 
